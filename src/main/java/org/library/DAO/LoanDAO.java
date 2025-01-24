@@ -2,7 +2,6 @@ package org.library.DAO;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
-import org.library.Book;
 import org.library.Loan;
 import org.library.Publication;
 
@@ -50,14 +49,25 @@ public class LoanDAO implements DAO<Loan, Long> {
         return list;
     }
 
-    public List<Publication> get(Long search) {
+    public List<Publication> getActivePublicationsByCardNumber(Long search) {
         this.em.getTransaction().begin();
         TypedQuery<Publication> query = em.createQuery("""
                 SELECT p
                 FROM Publication p, Loan l
                 WHERE l.effectiveReturnDate IS NULL
-                AND l.user.cardNumber = :search""", Publication.class);
+                AND l.user.cardNumber = :search
+                AND l.isbn.id = p.id""", Publication.class);
         List<Publication> list = query.setParameter("search", search).getResultList();
+        this.em.getTransaction().commit();
+        return list;
+    }
+
+    public List<Loan> getAllExpiredLoans() {
+        this.em.getTransaction().begin();
+        List<Loan> list = em.createQuery("""
+                SELECT l FROM Loan l
+                WHERE l.effectiveReturnDate IS NULL
+                AND l.expectedReturnDate < CURRENT DATE""", Loan.class).getResultList();
         this.em.getTransaction().commit();
         return list;
     }

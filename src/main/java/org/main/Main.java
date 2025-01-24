@@ -98,6 +98,16 @@ public class Main {
 
             //es.7
 
+            //Così è possibile ricevere una lista con tutte le publication dei loan non ancora restituiti dell'utente con CardNumber 1
+
+            //System.out.println(loanDAO.getActivePublicationsByCardNumber(1L));
+
+
+            //es.8
+
+            //Con questo metodo verranno stampati in console tutti i prestiti scaduti e non restituiti
+
+            //System.out.println(loanDAO.getAllExpiredLoans());
 
 
         } catch (Exception e) {

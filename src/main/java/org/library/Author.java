@@ -40,15 +40,4 @@ public class Author {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (!(o instanceof Author author)) return false;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
 }
